@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- This file is part of bank_es module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full
+copyright notices and license terms. -->
+<tryton>
+    <data>
+        <!-- bank -->
+        <record model="ir.ui.view" id="bank_view_form">
+            <field name="model">bank</field>
+            <field name="inherit"
+                ref="bank.bank_view_form"/>
+            <field name="name">bank_form</field>
+        </record>
+        <record model="ir.ui.view" id="bank_view_list">
+            <field name="model">bank</field>
+            <field name="inherit"
+                ref="bank.bank_view_list"/>
+            <field name="name">bank_list</field>
+        </record>
+
+        <!-- load.banks wizard -->
+        <record model="ir.ui.view" id="load_banks_start_view_form">
+            <field name="model">load.banks.start</field>
+            <field name="type">form</field>
+            <field name="name">load_banks_start_form</field>
+        </record>
+
+        <record model="ir.action.wizard" id="load_banks_action_wizard">
+            <field name="name">Load banks of Spain</field>
+            <field name="wiz_name">load.banks</field>
+        </record>
+
+        <record model="ir.module.module.config_wizard.item"
+            id="config_wizard_load_banks">
+            <field name="action" ref="load_banks_action_wizard"/>
+            <field name="sequence" eval="40"/>
+        </record>
+    </data>
+</tryton>
