@@ -132,7 +132,6 @@ class LoadBanks(Wizard):
             with transaction.set_context(active_test=False):
                 parties = Party.search([
                         ('name', '=', row[22]),
-                        ('active', 'in', (True, False)),
                         ])
             if parties:
                 party = parties[0]
