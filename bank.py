@@ -6,6 +6,7 @@ from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Not, Eval, Bool
 from trytond.wizard import Button, StateView, Wizard, StateTransition
+from trytond.transaction import Transaction
 import os
 
 __all__ = ['Bank', 'LoadBanksStart', 'LoadBanks']
@@ -112,6 +113,7 @@ class LoadBanks(Wizard):
         country, = Country.search([('code', '=', 'ES')])
         Contact = pool.get('party.contact_mechanism')
         Subdivision = pool.get('country.subdivision')
+        transaction = Transaction()
 
         delimiter = ','
         quotechar = '"'
@@ -127,10 +129,11 @@ class LoadBanks(Wizard):
             if not row:
                 continue
 
-            parties = Party.search([
-                    ('name', '=', row[22]),
-                    ('active', 'in', (True, False)),
-                    ])
+            with transaction.set_context(active_test=False):
+                parties = Party.search([
+                        ('name', '=', row[22]),
+                        ('active', 'in', (True, False)),
+                        ])
             if parties:
                 party = parties[0]
             else:
@@ -147,11 +150,11 @@ class LoadBanks(Wizard):
             bank.bic = row[19]
             bank.save()
 
-            addresses = Address.search([
-                ('party', '=', party),
-                ('name', 'in', [False, party.name]),
-                ('active', 'in', [True, False]),
-                ])
+            with transaction.set_context(active_test=False):
+                addresses = Address.search([
+                    ('party', '=', party),
+                    ('name', 'in', [None, party.name]),
+                    ])
             if addresses:
                 address = addresses[0]
                 address.active = party.active
