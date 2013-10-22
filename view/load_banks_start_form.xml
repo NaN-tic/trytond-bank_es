@@ -5,7 +5,7 @@ copyright notices and license terms. -->
 <form string="Load banks for Spain">
     <image name="tryton-dialog-information" xexpand="0"
         xfill="0"/>
-    <label string="Click 'Accept' button to load banks in the data base." 
+    <label string="This process will load all Spanish banks as parties in the database."
         id="load_banks"
         yalign="0.0" xalign="0.0" xexpand="1"/>
     <newline/>
