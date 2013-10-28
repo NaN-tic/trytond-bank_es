@@ -1,0 +1,47 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:load.banks:"
+msgid "CSV Import Error!"
+msgstr "Error importació CSV"
+
+msgctxt "error:load.banks:"
+msgid ""
+"Error reading file: %s.\n"
+"Error raised: %s."
+msgstr ""
+"Error llegint fitxer: %s.\n"
+"Error obtingut: %s."
+
+msgctxt "field:bank,bank_code:"
+msgid "National Code"
+msgstr "Codi nacional"
+
+msgctxt "field:load.banks.start,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "model:ir.action,name:load_banks_action_wizard"
+msgid "Load banks of Spain"
+msgstr "Afegeix els bancs espanyols"
+
+msgctxt "model:load.banks.start,name:"
+msgid "Load Banks Start"
+msgstr "Inici afegir bancs espanyols"
+
+msgctxt "view:load.banks.start:"
+msgid "Load banks for Spain"
+msgstr "Afegeix els bancs espanyols"
+
+msgctxt "view:load.banks.start:"
+msgid "This process will load all Spanish banks as parties in the database."
+msgstr "Aquest procés afegirà els bancs espanyols a la base de dades."
+
+msgctxt "wizard_button:load.banks,start,accept:"
+msgid "Accept"
+msgstr "Accepta"
+
+msgctxt "wizard_button:load.banks,start,end:"
+msgid "Cancel"
+msgstr "Cancel·la"
