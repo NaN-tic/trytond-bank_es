@@ -138,7 +138,7 @@ class LoadBanks(Wizard):
             else:
                 party = Party()
                 party.active = False
-            party.bank_code = 'banc' + row[1]
+            party.code = 'banc' + row[1]
             party.name = row[22]
             party.lang = lang
             party.save()
