@@ -134,13 +134,14 @@ class LoadBanks(Wizard):
                         ('name', '=', row[22]),
                         ])
             if parties:
-                party = parties[0]
+                continue
             else:
                 party = Party()
                 party.active = False
             party.code = 'BNC' + row[1]
             party.name = row[22]
             party.lang = lang
+            party.addresses = []
             party.save()
 
             banks = Bank.search([('bank_code', '=', row[1])])
