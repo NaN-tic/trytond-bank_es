@@ -20,6 +20,13 @@ class Bank:
             'required': Not(Bool(Eval('bic')))
             }, depends=['bic'])
 
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        return ['OR',
+                ('party',) + tuple(clause[1:]),
+                ('bic',) + tuple(clause[1:]),
+                ('bank_code',) + tuple(clause[1:])]
+
 
 class LoadBanksStart(ModelView):
     '''Load Banks Start'''
