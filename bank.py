@@ -210,7 +210,7 @@ class LoadBanks(Wizard):
                 contact = contacts[0] if contacts else Contact()
                 contact.party = party
                 contact.type = 'website'
-                contact.value = row[15]
+                contact.value = row[15].lower()
                 contact.save()
 
         return 'end'
