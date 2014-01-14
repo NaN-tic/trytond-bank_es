@@ -137,18 +137,22 @@ class LoadBanks(Wizard):
                 continue
 
             with transaction.set_context(active_test=False):
-                parties = Party.search([
+                parties = Party.search(['OR',
                         ('name', '=', row[22]),
+                        ('code', '=', 'BNC' + row[1])
                         ])
             if parties:
-                continue
+                party = parties[0]
             else:
                 party = Party()
                 party.active = False
-            party.code = 'BNC' + row[1]
-            party.name = row[22]
-            party.lang = lang
-            party.addresses = []
+                party.name = row[22]
+                party.code = 'BNC' + row[1]
+                party.addresses = []
+                party.lang = lang
+            if row[4]:
+                party.vat_country = 'ES'
+                party.vat_number = row[4]
             party.save()
 
             banks = Bank.search([('bank_code', '=', row[1])])
@@ -165,12 +169,11 @@ class LoadBanks(Wizard):
                     ])
             if addresses:
                 address = addresses[0]
-                address.active = party.active
             else:
                 address = Address()
                 address.active = False
-            address.party = party
-            address.name = party.name
+                address.party = party
+                address.name = party.name
             address.street = row[23]
             address.zip = row[9]
             address.city = row[10]
