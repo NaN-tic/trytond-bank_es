@@ -35,5 +35,11 @@ copyright notices and license terms. -->
             <field name="action" ref="load_banks_action_wizard"/>
             <field name="sequence" eval="40"/>
         </record>
+
+        <!-- Show banking menu only for Bank Administration members -->
+        <record model="ir.ui.menu-res.group" id="menu_banking_group_bank_admin">
+            <field name="menu" ref="bank.menu_banking"/>
+            <field name="group" ref="bank.group_bank_admin"/>
+        </record>
     </data>
 </tryton>
