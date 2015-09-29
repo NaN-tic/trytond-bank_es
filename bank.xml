@@ -30,7 +30,7 @@ copyright notices and license terms. -->
             <field name="wiz_name">load.banks</field>
         </record>
 
-        <record model="ir.module.module.config_wizard.item"
+        <record model="ir.module.config_wizard.item"
             id="config_wizard_load_banks">
             <field name="action" ref="load_banks_action_wizard"/>
             <field name="sequence" eval="40"/>
