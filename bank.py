@@ -113,8 +113,9 @@ class LoadBanks(Wizard):
         pool = Pool()
         Lang = pool.get('ir.lang')
         lang, = Lang.search([('code', '=', 'es_ES')])
-        Party = pool.get('party.party')
         Bank = pool.get('bank')
+        Party = pool.get('party.party')
+        Identifier = pool.get('party.identifier')
         Address = pool.get('party.address')
         Country = pool.get('country.country')
         country, = Country.search([('code', '=', 'ES')])
@@ -151,8 +152,10 @@ class LoadBanks(Wizard):
                 party.addresses = []
                 party.lang = lang
             if row[4]:
-                party.vat_country = 'ES'
-                party.vat_number = row[4]
+                identifier = Identifier()
+                identifier.type = 'eu_vat'
+                identifier.code = 'ES%s' % row[4]
+                party.identifiers = [identifier]
             party.save()
 
             banks = Bank.search([('bank_code', '=', row[1])])
