@@ -72,7 +72,7 @@ setup(name=name,
     package_data={
         'trytond.modules.bank_es': (info.get('xml', [])
             + ['tryton.cfg', 'view/*.xml', 'locale/*.po', '*.odt',
-                'icons/*.svg', 'tests/*.rst']),
+                'icons/*.svg', 'tests/*.rst', 'bank.csv']),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
