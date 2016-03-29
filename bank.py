@@ -10,10 +10,10 @@ from trytond.transaction import Transaction
 import os
 
 __all__ = ['Bank', 'LoadBanksStart', 'LoadBanks']
-__metaclass__ = PoolMeta
 
 
 class Bank:
+    __metaclass__ = PoolMeta
     __name__ = 'bank'
     bank_code = fields.Char('National Code', select=1,
         states={
