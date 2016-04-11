@@ -22,10 +22,17 @@ class Bank:
 
     @classmethod
     def search_rec_name(cls, name, clause):
-        return ['OR',
-                ('party',) + tuple(clause[1:]),
-                ('bic',) + tuple(clause[1:]),
-                ('bank_code',) + tuple(clause[1:])]
+        domain = super(Bank, cls).search_rec_name(name, clause)
+        if clause[1].startswith('!') or clause[1].startswith('not '):
+            bool_op = 'AND'
+        else:
+            bool_op = 'OR'
+        return [bool_op,
+            domain,
+            ('party',) + tuple(clause[1:]),
+            ('bic',) + tuple(clause[1:]),
+            ('bank_code',) + tuple(clause[1:]),
+            ]
 
 
 class LoadBanksStart(ModelView):
