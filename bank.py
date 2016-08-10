@@ -158,11 +158,15 @@ class LoadBanks(Wizard):
                 party.code = 'BNC' + row[1]
                 party.addresses = []
                 party.lang = lang
+                party.identifiers = []
             if row[4]:
-                identifier = Identifier()
-                identifier.type = 'eu_vat'
-                identifier.code = 'ES%s' % row[4]
-                party.identifiers = [identifier]
+                codes = [c.code for c in party.identifiers]
+                vat_code = 'ES%s' % row[4]
+                if vat_code not in codes:
+                    identifier = Identifier()
+                    identifier.type = 'eu_vat'
+                    identifier.code = vat_code
+                    party.identifiers = [identifier] + list(party.identifiers)
             party.save()
 
             banks = Bank.search([('bank_code', '=', row[1])])
@@ -188,9 +192,11 @@ class LoadBanks(Wizard):
             address.zip = row[9]
             address.city = row[10]
             address.country = country
-            address.subdivision = Subdivision.search([
+            subdivisions = Subdivision.search([
                     ('code', '=', get_subdivision(row[16])),
-                    ], limit=1)[0]
+                    ], limit=1)
+            if subdivisions:
+                address.subdivision, = subdivisions
             address.save()
 
             if row[13]:
