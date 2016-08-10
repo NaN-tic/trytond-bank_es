@@ -132,15 +132,19 @@ class LoadBanks(Wizard):
 
         delimiter = ','
         quotechar = '"'
-        data = open(os.path.join(os.path.dirname(__file__), 'bank.csv'))
-        try:
-            rows = reader(data, delimiter=delimiter, quotechar=quotechar)
-        except TypeError, e:
-            self.raise_user_error('error',
-                error_description='read_error',
-                error_description_args=('bank.csv', e))
-        rows.next()
-        for row in rows:
+
+        def get_rows():
+            data = open(os.path.join(os.path.dirname(__file__), 'bank.csv'))
+            try:
+                rows = reader(data, delimiter=delimiter, quotechar=quotechar)
+            except TypeError, e:
+                self.raise_user_error('error',
+                    error_description='read_error',
+                    error_description_args=('bank.csv', e))
+            rows.next()
+            return rows
+        created_parties = {}
+        for row in get_rows():
             if not row:
                 continue
 
@@ -158,78 +162,77 @@ class LoadBanks(Wizard):
                 party.code = 'BNC' + row[1]
                 party.addresses = []
                 party.lang = lang
+                party.addresses = []
                 party.identifiers = []
+                party.contact_mechanisms = []
             if row[4]:
-                codes = [c.code for c in party.identifiers]
+                codes = set([c.code for c in party.identifiers])
                 vat_code = 'ES%s' % row[4]
                 if vat_code not in codes:
                     identifier = Identifier()
                     identifier.type = 'eu_vat'
                     identifier.code = vat_code
                     party.identifiers = [identifier] + list(party.identifiers)
-            party.save()
 
-            banks = Bank.search([('bank_code', '=', row[1])])
-            bank = banks[0] if banks else Bank()
-            bank.party = party
-            bank.bank_code = row[1]
-            bank.bic = row[19]
-            bank.save()
-
-            with transaction.set_context(active_test=False):
-                addresses = Address.search([
-                    ('party', '=', party),
-                    ('name', 'in', [None, party.name]),
-                    ])
-            if addresses:
-                address = addresses[0]
-            else:
+            addresses = set([a.name for a in party.addresses])
+            if party.name not in addresses:
                 address = Address()
                 address.active = False
-                address.party = party
                 address.name = party.name
-            address.street = row[23]
-            address.zip = row[9]
-            address.city = row[10]
-            address.country = country
-            subdivisions = Subdivision.search([
-                    ('code', '=', get_subdivision(row[16])),
-                    ], limit=1)
-            if subdivisions:
-                address.subdivision, = subdivisions
-            address.save()
+                address.street = row[23]
+                address.zip = row[9]
+                address.city = row[10]
+                address.country = country
+                subdivisions = Subdivision.search([
+                        ('code', '=', get_subdivision(row[16])),
+                        ], limit=1)
+                if subdivisions:
+                    address.subdivision, = subdivisions
+                party.addresses = [address] + list(party.addresses)
 
-            if row[13]:
-                contacts = Contact.search([
-                        ('party', '=', party),
-                        ('type', '=', 'phone')
-                        ])
-                contact = contacts[0] if contacts else Contact()
-                contact.party = party
+            new_mechanisms = []
+            current_mechanisms = set([(c.type, c.value)
+                    for c in party.contact_mechanisms])
+            if row[13] and ('phone', row[13]) not in current_mechanisms:
+                contact = Contact()
                 contact.type = 'phone'
                 contact.value = row[13]
-                contact.save()
+                new_mechanisms.append(contact)
 
-            if row[14]:
-                contacts = Contact.search([
-                        ('party', '=', party),
-                        ('type', '=', 'fax')
-                        ])
-                contact = contacts[0] if contacts else Contact()
-                contact.party = party
+            if row[14] and ('fax', row[14]) not in current_mechanisms:
+                contact = Contact()
                 contact.type = 'fax'
                 contact.value = row[14]
-                contact.save()
+                new_mechanisms.append(contact)
 
-            if row[15]:
-                contacts = Contact.search([
-                        ('party', '=', party),
-                        ('type', '=', 'website')
-                        ])
-                contact = contacts[0] if contacts else Contact()
-                contact.party = party
+            if (row[15] and ('website',
+                        row[15].lower()) not in current_mechanisms):
+                contact = Contact()
                 contact.type = 'website'
                 contact.value = row[15].lower()
-                contact.save()
+                new_mechanisms.append(contact)
+            if new_mechanisms:
+                party.contact_mechanisms = (new_mechanisms +
+                    list(party.contact_mechanisms))
+            created_parties[row[1]] = party
+        Party.save(created_parties.values())
 
+        to_save = []
+        for row in get_rows():
+            if not row:
+                continue
+            banks = Bank.search([('bank_code', '=', row[1])])
+            if not banks:
+                bank = Bank(party=None, bank_code=None, bic=None)
+            else:
+                bank = banks[0]
+            party = created_parties[row[1]]
+            if bank.party != party:
+                bank.party = party
+            if bank.bank_code != row[1]:
+                bank.bank_code = row[1]
+            if bank.bic != row[19]:
+                bank.bic = row[19]
+            to_save.append(bank)
+        Bank.save(to_save)
         return 'end'
