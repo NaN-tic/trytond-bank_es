@@ -21,6 +21,13 @@ class Bank:
             }, depends=['bic'])
 
     @classmethod
+    def __setup__(cls):
+        super(Bank, cls).__setup__()
+        cls.party.context.update({
+                'active_test': False,
+                })
+
+    @classmethod
     def search_rec_name(cls, name, clause):
         domain = super(Bank, cls).search_rec_name(name, clause)
         if clause[1].startswith('!') or clause[1].startswith('not '):
