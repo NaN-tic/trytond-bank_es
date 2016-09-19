@@ -126,7 +126,7 @@ class LoadBanks(Wizard):
 
         pool = Pool()
         Lang = pool.get('ir.lang')
-        lang, = Lang.search([('code', '=', 'es_ES')])
+        lang, = Lang.search([('code', '=', 'es')])
         Bank = pool.get('bank')
         Party = pool.get('party.party')
         Identifier = pool.get('party.identifier')
