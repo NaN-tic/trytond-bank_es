@@ -20,7 +20,7 @@ msgstr "Código nacional"
 
 msgctxt "field:load.banks.start,id:"
 msgid "ID"
-msgstr "ID"
+msgstr "Identificador"
 
 msgctxt "model:ir.action,name:load_banks_action_wizard"
 msgid "Load banks of Spain"
