@@ -43,7 +43,7 @@ minor_version = int(minor_version)
 name = 'trytonspain_bank_es'
 download_url = 'https://bitbucket.org/trytonspain/trytond-bank_es'
 
-requires = []
+requires = ['python-stdnum >= 1.5']
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res)(\W|$)', dep):
         prefix = MODULE2PREFIX.get(dep, 'trytond')
