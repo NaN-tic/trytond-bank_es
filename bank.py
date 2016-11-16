@@ -247,7 +247,7 @@ class LoadBanks(Wizard):
 
             with transaction.set_context(active_test=False):
                 parties = Party.search(['OR',
-                        ('name', '=', row[22]),
+                        ('name', '=', row[4]),
                         ('code', '=', 'BNC' + row[1])
                         ])
             if parties:
@@ -255,16 +255,16 @@ class LoadBanks(Wizard):
             else:
                 party = Party()
                 party.active = False
-                party.name = row[22]
+                party.name = row[4]
                 party.code = 'BNC' + row[1]
                 party.addresses = []
                 party.lang = lang
                 party.addresses = []
                 party.identifiers = []
                 party.contact_mechanisms = []
-            if row[4]:
+            if row[6]:
                 codes = set([c.code for c in party.identifiers])
-                vat_code = 'ES%s' % row[4]
+                vat_code = 'ES%s' % row[6]
                 if vat_code not in codes:
                     identifier = Identifier()
                     identifier.type = 'eu_vat'
@@ -276,12 +276,12 @@ class LoadBanks(Wizard):
                 address = Address()
                 address.active = False
                 address.name = party.name
-                address.street = row[23]
-                address.zip = row[9]
-                address.city = row[10]
+                address.street = row[8]
+                address.zip = row[11]
+                address.city = row[12]
                 address.country = country
                 subdivisions = Subdivision.search([
-                        ('code', '=', get_subdivision(row[16])),
+                        ('code', '=', get_subdivision(row[14])),
                         ], limit=1)
                 if subdivisions:
                     address.subdivision, = subdivisions
@@ -290,23 +290,27 @@ class LoadBanks(Wizard):
             new_mechanisms = []
             current_mechanisms = set([(c.type, c.value)
                     for c in party.contact_mechanisms])
-            if row[13] and ('phone', row[13]) not in current_mechanisms:
+            if row[16] and ('phone', row[16]) not in current_mechanisms:
                 contact = Contact()
                 contact.type = 'phone'
-                contact.value = row[13]
+                contact.value = row[16]
+                if row[16].startswith('0'):
+                    contact.value = row[16][1:]
                 new_mechanisms.append(contact)
 
-            if row[14] and ('fax', row[14]) not in current_mechanisms:
+            if row[18] and ('fax', row[18]) not in current_mechanisms:
                 contact = Contact()
                 contact.type = 'fax'
-                contact.value = row[14]
+                contact.value = row[18]
+                if row[18].startswith('0'):
+                    contact.value = row[18][1:]
                 new_mechanisms.append(contact)
 
-            if (row[15] and ('website',
-                        row[15].lower()) not in current_mechanisms):
+            if (row[19] and ('website',
+                        row[19].lower()) not in current_mechanisms):
                 contact = Contact()
                 contact.type = 'website'
-                contact.value = row[15].lower()
+                contact.value = row[19].lower()
                 new_mechanisms.append(contact)
             if new_mechanisms:
                 party.contact_mechanisms = (new_mechanisms +
@@ -328,8 +332,8 @@ class LoadBanks(Wizard):
                 bank.party = party
             if bank.bank_code != row[1]:
                 bank.bank_code = row[1]
-            if bank.bic != row[19]:
-                bank.bic = row[19]
+            if bank.bic != row[47]:
+                bank.bic = row[47]
             to_save.append(bank)
         Bank.save(to_save)
         return 'end'
