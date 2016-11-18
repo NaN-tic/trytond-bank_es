@@ -8,7 +8,6 @@ from .bank import *
 def register():
     Pool.register(
         Bank,
-        Number,
         LoadBanksStart,
         module='bank_es', type_='model')
     Pool.register(

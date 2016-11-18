@@ -2,10 +2,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:bank.account.number:"
-msgid "Invalid Spanish Cuenta Corriente \"%s\"."
-msgstr "Cuenta corriente española invalida: \"%s\"."
-
 msgctxt "error:load.banks:"
 msgid "CSV Import Error!"
 msgstr "Error importación CSV"
@@ -33,10 +29,6 @@ msgstr "Añadir los bancos españoles"
 msgctxt "model:load.banks.start,name:"
 msgid "Load Banks Start"
 msgstr "Inicio añadir bancos españoles"
-
-msgctxt "selection:bank.account.number,type:"
-msgid "Spanish Cuenta Corriente"
-msgstr "Cuenta corriente española"
 
 msgctxt "view:load.banks.start:"
 msgid "This process will load all Spanish banks as parties in the database."
