@@ -4,8 +4,6 @@
 from csv import reader
 import os
 
-from stdnum.es import ccc
-
 from trytond.model import ModelView, fields
 from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Not, Eval, Bool
