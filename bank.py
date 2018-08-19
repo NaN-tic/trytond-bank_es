@@ -13,8 +13,7 @@ from trytond.transaction import Transaction
 __all__ = ['Bank', 'LoadBanksStart', 'LoadBanks']
 
 
-class Bank:
-    __metaclass__ = PoolMeta
+class Bank(metaclass=PoolMeta):
     __name__ = 'bank'
     bank_code = fields.Char('National Code', select=1,
         states={
@@ -142,14 +141,15 @@ class LoadBanks(Wizard):
         quotechar = '"'
 
         def get_rows():
-            data = open(os.path.join(os.path.dirname(__file__), 'bank.csv'))
+            data = open(os.path.join(os.path.dirname(__file__), 'bank.csv'),
+                'r', encoding='utf-8')
             try:
                 rows = reader(data, delimiter=delimiter, quotechar=quotechar)
-            except TypeError, e:
+            except TypeError as e:
                 self.raise_user_error('error',
                     error_description='read_error',
                     error_description_args=('bank.csv', e))
-            rows.next()
+            next(rows)
             return rows
         created_parties = {}
         for row in get_rows():
@@ -227,7 +227,7 @@ class LoadBanks(Wizard):
                 party.contact_mechanisms = (new_mechanisms +
                     list(party.contact_mechanisms))
             created_parties[row[1]] = party
-        Party.save(created_parties.values())
+        Party.save(list(created_parties.values()))
 
         to_save = []
         for row in get_rows():

@@ -1,10 +1,10 @@
 import csv
 import tempfile
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from xlrd import open_workbook
 
-urlfile = urllib.URLopener()
+urlfile = urllib.request.URLopener()
 with tempfile.NamedTemporaryFile() as banks:
     urlfile.retrieve('http://www.bde.es/f/webbde/SGE/regis/ficheros/es/'
         'REGBANESP_CONESTAB_A.XLS', banks.name)
