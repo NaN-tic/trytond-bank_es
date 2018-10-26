@@ -3,7 +3,7 @@
 The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license terms. -->
 <form>
-    <image name="tryton-dialog-information" xexpand="0"
+    <image name="tryton-info" xexpand="0"
         xfill="0"/>
     <label string="This process will load all Spanish banks as parties in the database."
         id="load_banks"
