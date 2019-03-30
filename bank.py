@@ -9,6 +9,8 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Not, Eval, Bool
 from trytond.wizard import Button, StateView, Wizard, StateTransition
 from trytond.transaction import Transaction
+from trytond.i18n import gettext
+from trytond.exceptions import UserError
 
 __all__ = ['Bank', 'LoadBanksStart', 'LoadBanks']
 
@@ -57,14 +59,6 @@ class LoadBanks(Wizard):
             Button('Accept', 'accept', 'tryton-ok', default=True),
             ])
     accept = StateTransition()
-
-    @classmethod
-    def __setup__(cls):
-        super(LoadBanks, cls).__setup__()
-        cls._error_messages.update({
-                'error': 'CSV Import Error!',
-                'read_error': 'Error reading file: %s.\nError raised: %s.',
-                })
 
     def transition_accept(self):
         def get_subdivision(code):
@@ -146,9 +140,8 @@ class LoadBanks(Wizard):
             try:
                 rows = reader(data, delimiter=delimiter, quotechar=quotechar)
             except TypeError as e:
-                self.raise_user_error('error',
-                    error_description='read_error',
-                    error_description_args=('bank.csv', e))
+                raise UserError(gettext('bank_es.read_error',
+                    filename='bank.csv', error=e))
             next(rows)
             return rows
         created_parties = {}

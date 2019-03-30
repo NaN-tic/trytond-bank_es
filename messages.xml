@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data group="1">
+    <record model="ir.message" id="error">
+        <field name="text">CSV Import Error!</field>
+    </record>
+    <record model="ir.message" id="read_error">
+        <field name="text">Error reading file: %(filename)s.\nError raised: %(error)s.</field>
+    </record>
+    </data>
+</tryton>
