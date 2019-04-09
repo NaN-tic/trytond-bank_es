@@ -2,18 +2,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:load.banks:"
-msgid "CSV Import Error!"
-msgstr "Error importación CSV"
-
-msgctxt "error:load.banks:"
-msgid ""
-"Error reading file: %s.\n"
-"Error raised: %s."
-msgstr ""
-"Error leyendo fichero: %s.\n"
-"Error obtenido: %s."
-
 msgctxt "field:bank,bank_code:"
 msgid "National Code"
 msgstr "Código nacional"
@@ -25,6 +13,14 @@ msgstr "ID"
 msgctxt "model:ir.action,name:load_banks_action_wizard"
 msgid "Load banks of Spain"
 msgstr "Añadir los bancos españoles"
+
+msgctxt "model:ir.message,text:error"
+msgid "CSV Import Error!"
+msgstr "¡Error de importación CSV!"
+
+msgctxt "model:ir.message,text:read_error"
+msgid "Error reading file: %(filename)s.\\nError raised: %(error)s."
+msgstr "Error al leer el archivo: %(filename)s.\\nError generado: %(error)s."
 
 msgctxt "model:load.banks.start,name:"
 msgid "Load Banks Start"
