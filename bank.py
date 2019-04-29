@@ -135,15 +135,15 @@ class LoadBanks(Wizard):
         quotechar = '"'
 
         def get_rows():
-            data = open(os.path.join(os.path.dirname(__file__), 'bank.csv'),
-                'r', encoding='utf-8')
-            try:
-                rows = reader(data, delimiter=delimiter, quotechar=quotechar)
-            except TypeError as e:
-                raise UserError(gettext('bank_es.read_error',
-                    filename='bank.csv', error=e))
-            next(rows)
-            return rows
+            with open(os.path.join(os.path.dirname(__file__), 'bank.csv'), 'r',
+                    encoding='utf-8') as data:
+                try:
+                    rows = list(reader(data, delimiter=delimiter,
+                        quotechar=quotechar))
+                except TypeError as e:
+                    raise UserError(gettext('bank_es.read_error',
+                        filename='bank.csv', error=e))
+                return rows[1:]
         created_parties = {}
         for row in get_rows():
             if not row:
