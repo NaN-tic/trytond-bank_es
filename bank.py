@@ -126,13 +126,17 @@ class LoadBanks(Wizard):
         Identifier = pool.get('party.identifier')
         Address = pool.get('party.address')
         Country = pool.get('country.country')
-        country, = Country.search([('code', '=', 'ES')])
         Contact = pool.get('party.contact_mechanism')
         Subdivision = pool.get('country.subdivision')
         transaction = Transaction()
 
         delimiter = ','
         quotechar = '"'
+
+        countries = Country.search([('code', '=', 'ES')], limit=1)
+        if not countries:
+            return 'end'
+        country, = countries
 
         def get_rows():
             with open(os.path.join(os.path.dirname(__file__), 'bank.csv'), 'r',
