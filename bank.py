@@ -185,7 +185,7 @@ class LoadBanks(Wizard):
                 address.active = False
                 address.name = party.name
                 address.street = row[8]
-                address.zip = row[11]
+                address.postal_code = row[11]
                 address.city = row[12]
                 address.country = country
                 subdivisions = Subdivision.search([
