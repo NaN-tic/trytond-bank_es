@@ -1,8 +1,7 @@
-# This file is part of the bank_es module for Tryton.
-# The COPYRIGHT file at the top level of this repository contains the full
-# copyright notices and license terms.
-import unittest
-import trytond.tests.test_tryton
+
+# This file is part of Tryton.  The COPYRIGHT file at the top level of
+# this repository contains the full copyright notices and license terms.
+
 from trytond.tests.test_tryton import ModuleTestCase, with_transaction
 from trytond.pool import Pool
 
@@ -21,7 +20,7 @@ def import_banks():
 
 
 class BankEsTestCase(ModuleTestCase):
-    'Test Bank Es module'
+    'Test BankEs module'
     module = 'bank_es'
 
     @with_transaction()
@@ -38,8 +37,4 @@ class BankEsTestCase(ModuleTestCase):
         self.assertEqual(banks, Bank.search([], count=True))
 
 
-def suite():
-    suite = trytond.tests.test_tryton.suite()
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(
-        BankEsTestCase))
-    return suite
+del ModuleTestCase
