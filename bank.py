@@ -17,7 +17,7 @@ __all__ = ['Bank', 'LoadBanksStart', 'LoadBanks']
 
 class Bank(metaclass=PoolMeta):
     __name__ = 'bank'
-    bank_code = fields.Char('National Code', select=1,
+    bank_code = fields.Char('National Code',
         states={
             'required': Not(Bool(Eval('bic')))
             }, depends=['bic'])
