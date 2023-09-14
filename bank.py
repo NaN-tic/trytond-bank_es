@@ -148,16 +148,22 @@ class LoadBanks(Wizard):
                     raise UserError(gettext('bank_es.read_error',
                         filename='bank.csv', error=e))
                 return rows[1:]
+
         created_parties = {}
         for row in get_rows():
             if not row:
                 continue
 
             with transaction.set_context(active_test=False):
-                parties = Party.search(['OR',
+                domain = ['OR',
                         ('name', '=', row[4]),
                         ('code', '=', 'BNC' + row[1])
-                        ])
+                        ]
+                if row[6]:
+                    vat_code = 'ES%s' % row[6]
+                    domain.append(('identifiers.code', '=', vat_code))
+                parties = Party.search(domain)
+
             if parties:
                 party = parties[0]
             else:
@@ -224,6 +230,7 @@ class LoadBanks(Wizard):
                 party.contact_mechanisms = (new_mechanisms +
                     list(party.contact_mechanisms))
             created_parties[row[1]] = party
+
         Party.save(list(created_parties.values()))
 
         to_save = []
