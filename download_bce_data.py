@@ -6,7 +6,7 @@ bank_es = 'REGBANESP_CONESTAB_A.xlsx'
 
 if not os.path.isfile(bank_es):
     print('Not found REGBANESP_CONESTAB_A file. Download and convert to XLSx '
-        'file (openpyxl only support XLSx)')
+        'file (openpyxl support XLSx)')
     print('wget http://www.bde.es/f/webbde/SGE/regis/ficheros/es/REGBANESP_CONESTAB_A.XLS')
     exit()
 
