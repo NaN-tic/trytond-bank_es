@@ -20,7 +20,7 @@ class Bank(metaclass=PoolMeta):
     bank_code = fields.Char('National Code',
         states={
             'required': Not(Bool(Eval('bic')))
-            }, depends=['bic'])
+            })
 
     @classmethod
     def __setup__(cls):
