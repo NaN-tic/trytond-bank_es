@@ -32,4 +32,8 @@ with open('bank.csv', 'wt') as f:
                 d['BIC'] = None
                 if d['COD_BE'] in bic_codes:
                     d['BIC'] = bic_codes[d['COD_BE']]
+            if d['TELEFONO'] != '':
+                d['TELEFONO'] = '+34' + d['TELEFONO'].lstrip('0')
+            if d['NUMFAX'] != '':
+                d['NUMFAX'] = '+34' + d['NUMFAX'].lstrip('0')
             writer.writerow(d)
