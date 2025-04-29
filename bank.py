@@ -183,7 +183,7 @@ class LoadBanks(Wizard):
             if party.name not in addresses:
                 address = Address()
                 address.active = False
-                address.name = party.name
+                address.party_name = party.name
                 address.street = row[8]
                 address.postal_code = row[11]
                 address.city = row[12]
