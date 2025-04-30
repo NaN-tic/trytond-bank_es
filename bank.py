@@ -179,7 +179,7 @@ class LoadBanks(Wizard):
                     identifier.code = vat_code
                     party.identifiers = [identifier] + list(party.identifiers)
 
-            addresses = set([a.name for a in party.addresses])
+            addresses = set([a.party_name for a in party.addresses])
             if party.name not in addresses:
                 address = Address()
                 address.active = False
