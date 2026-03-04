@@ -240,8 +240,8 @@ class LoadBanks(Wizard):
                 bank.party = party
             if bank.bank_code != row[1]:
                 bank.bank_code = row[1]
-            if bank.bic != row[47]:
-                bank.bic = row[47]
+            if bank.bic != row[48]:
+                bank.bic = row[48]
             to_save.append(bank)
         Bank.save(to_save)
         return 'end'
