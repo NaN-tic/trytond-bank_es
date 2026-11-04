@@ -1,0 +1,45 @@
+#
+msgid ""
+msgstr ""
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgctxt "field:bank,bank_code:"
+msgid "National Code"
+msgstr "国内代码"
+
+msgctxt "model:ir.action,name:load_banks_action_wizard"
+msgid "Load banks of Spain"
+msgstr "加载西班牙银行"
+
+msgctxt "model:ir.message,text:error"
+msgid "CSV Import Error!"
+msgstr "CSV 导入错误！"
+
+#, python-format
+msgctxt "model:ir.message,text:read_error"
+msgid "Error reading file: %(filename)s.\\nError raised: %(error)s."
+msgstr "读取文件 %(filename)s 时出错。\\n错误：%(error)s。"
+
+msgctxt "model:load.banks.start,name:"
+msgid "Load Banks Start"
+msgstr "加载银行：开始"
+
+msgctxt "view:load.banks.start:"
+msgid "This process will load all Spanish banks as parties in the database."
+msgstr "此过程会将所有西班牙银行作为往来单位加载到数据库中。"
+
+msgctxt "wizard_button:load.banks,start,accept:"
+msgid "Accept"
+msgstr "接受"
+
+msgctxt "wizard_button:load.banks,start,end:"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "model:load.banks.start,string:"
+msgid "Load Banks Start"
+msgstr "加载银行：开始"
