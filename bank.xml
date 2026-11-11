@@ -42,4 +42,10 @@ copyright notices and license terms. -->
             <field name="group" ref="bank.group_bank_admin"/>
         </record>
     </data>
+    <data>
+        <record model="ir.action-res.group" id="load_banks_group_bank_admin">
+            <field name="action" ref="load_banks_action_wizard"/>
+            <field name="group" ref="bank.group_bank_admin"/>
+        </record>
+    </data>
 </tryton>
